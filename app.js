@@ -104,13 +104,12 @@ function initMap() {
     });
 }
 
-
-
-
-
 app.get("/", (req, res) => {
-    res.send("Hello WanderLust");
+    res.redirect("/listings");
 });
+app.use("/listings", listings);
+app.use("/listings/:id/reviews", reviews);
+app.use("/", userRouter);
 
 app.use("/listing", listings);
 app.use("/listings/:id/reviews", reviews);

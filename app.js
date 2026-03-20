@@ -105,10 +105,10 @@ function initMap() {
 }
 
 app.get("/", (req, res) => {
-    res.redirect("/listings");
+    res.redirect("/listing");
 });
-app.use("/listings", listings);
-app.use("/listings/:id/reviews", reviews);
+app.use("/listing", listings);
+app.use("/listing/:id/reviews", reviews);
 app.use("/", userRouter);
 
 app.use((err, req, res, next) => {

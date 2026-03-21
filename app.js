@@ -27,11 +27,6 @@ const userRouter = require("./routes/user.js");
 
 const dbURL = process.env.ATLASDB_URL;
 
-main().then(() => {
-    console.log("connected to DB")
-}).catch((err) => {
-    console.log(err);
-})
 async function main() {
     try {
         await mongoose.connect(dbURL);
@@ -57,7 +52,7 @@ const store = MongoStore.create({
     },
     touchAfter: 24 * 3600
 });
-store.on("error", () => {
+store.on("error", (err) => {
     console.log("ERROR in MONGO SESSION STORE", err)
 });
 
@@ -72,7 +67,6 @@ const sessionOptions = {
         HttpOnly: true,
     },
 };
-
 
 app.use(session(sessionOptions));
 app.use(flash());
@@ -90,19 +84,6 @@ app.use((req, res, next) => {
     next();
 });
 
-// Initialize the map.
-function initMap() {
-    const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 8,
-        center: { lat: 40.72, lng: -73.96 },
-    });
-    const geocoder = new google.maps.Geocoder();
-    const infowindow = new google.maps.InfoWindow();
-
-    document.getElementById("submit").addEventListener("click", () => {
-        geocodePlaceId(geocoder, map, infowindow);
-    });
-}
 
 app.get("/", (req, res) => {
     res.redirect("/listing");
@@ -116,6 +97,10 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render("error.ejs", { err });
 });
 
-app.listen(8080, () => {
-    console.log("server is listening to port 8080");
+// app.listen(8080, () => {
+//     console.log("server is listening to port 8080");
+// });
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+    console.log(`server is listening on port ${PORT}`);
 });

@@ -9,16 +9,31 @@ cloudinary.config(
     }
 );
 
-const storage = new CloudinaryStorage({
-    cloudinary: cloudinary,
-    params: {
-        folder: 'wanderlust_DEV',
-        allowedFormats: ["png", "jpg", "jpeg"],
+// const storage = new CloudinaryStorage({
+//     cloudinary: cloudinary,
+//     params: {
+//         folder: 'wanderlust_DEV',
+//         allowedFormats: ["png", "jpg", "jpeg"],
 
+//     },
+// });
+// module.exports = {
+//     cloudinary,
+//     storage,
+// }
+
+const storage = new CloudinaryStorage({
+    cloudinary,
+    params: async (req, file) => {
+        return {
+            folder: 'wanderlust_DEV',
+            resource_type: 'image',
+            format: file.mimetype.split('/')[1], // auto-detect (jpg, png, etc.)
+        };
     },
 });
+
 module.exports = {
     cloudinary,
     storage,
-}
-
+};

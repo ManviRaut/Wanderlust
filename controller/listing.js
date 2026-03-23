@@ -42,7 +42,7 @@ module.exports.editListing = async (req, res) => {
     }
     let originalimageUrl = listing.image.url;
     originalimageUrl = originalimageUrl.replace("/upload", "/upload/h_250,w_250");
-    res.render("/listing/edit.ejs", { listing, originalimageUrl });
+    res.render("edit", { listing, originalimageUrl });
 };
 
 module.exports.updateListing = async (req, res) => {

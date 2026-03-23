@@ -52,7 +52,7 @@ module.exports.updateListing = async (req, res) => {
     let url = req.file.path;
     let filename = req.file.filename;
     newlisting.image = { url, filename };
-    await listing.save();
+    await newlisting.save();
     req.flash("success", "Listing Updated!");
     res.redirect(`/listing/${id}`);
 };

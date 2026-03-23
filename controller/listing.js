@@ -38,7 +38,7 @@ module.exports.editListing = async (req, res) => {
     const listing = await Listing.findById(id)
     let originalimageUrl = listing.image.url;
     originalimageUrl = originalimageUrl.replace("/upload", "/upload/h_250,w_250");
-    res.render("edit", { listing, originalimageUrl });
+    res.render("/listing/edit.ejs", { listing, originalimageUrl });
 };
 
 module.exports.updateListing = async (req, res) => {

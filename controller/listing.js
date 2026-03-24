@@ -47,14 +47,25 @@ module.exports.editListing = async (req, res) => {
 
 module.exports.updateListing = async (req, res) => {
     let { id } = req.params;
-    let newlisting = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
-    if (typeof req.file !== "undefined");
-    let url = req.file.path;
-    let filename = req.file.filename;
-    newlisting.image = { url, filename };
-    await newlisting.save();
-    req.flash("success", "Listing Updated!");
-    res.redirect(`/listing/${id}`);
+   // Find the listing first
+  let listing = await Listing.findById(id);
+  if (!listing) {
+    req.flash("error", "Listing not found!");
+    return res.redirect("/listings");
+  }
+
+  // Update other fields
+  listing.set({ ...req.body.listing });
+    
+    if (req.file) {
+    const url = req.file.path;
+    const filename = req.file.filename;
+    listing.image = { url, filename };
+  }
+
+  await listing.save();
+  req.flash("success", "Listing Updated!");
+  res.redirect(`/listing/${id}`);
 };
 
 module.exports.destroyListing = async (req, res) => {

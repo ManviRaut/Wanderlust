@@ -8,22 +8,22 @@ const listingSchema = new Schema({
         type: String,
         required: true,
     },
-    description: String,
+    description:{type: String},
     image: {
         url: String,
         filename: String,
     },
-    price: Number,
-    location: String,
-    country: String,
+    price: {type:Number},
+    location: {type:String},
+    country:{type: String},
     reviews: [{
         type: Schema.Types.ObjectId,
-        ref: "Review"
+        ref: "Review",
     }],
     owner: {
         type: Schema.Types.ObjectId,
         ref: "User"
-    }
+    },
 
 });
 

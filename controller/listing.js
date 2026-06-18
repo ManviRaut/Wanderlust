@@ -49,21 +49,13 @@ module.exports.updateListing = async (req, res) => {
     let { id } = req.params;
    // Find the listing first
   let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
-  if (!listing) {
-    req.flash("error", "Listing not found!");
-    return res.redirect("/listings");
-  }
-
-  // Update other fields
-  listing.set({ ...req.body.listing });
     
     if (typeof req.file !== "undefined") {
-    const url = req.file.path;
-    const filename = req.file.filename;
+    let url = req.file.path;
+    let filename = req.file.filename;
     listing.image = { url, filename };
     await listing.save();
   }
-
 
   req.flash("success", "Listing Updated!");
   res.redirect(`/listing/${id}`);

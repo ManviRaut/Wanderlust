@@ -19,7 +19,7 @@ router.get("/newForm", isloggedin, listingController.RenderNewForm);
 router.get("/:id/edit", isloggedin, isOwner, wrapAsync(listingController.editListing));
 router.route("/:id")
     .get(wrapAsync(listingController.showListing))
-    .put(isloggedin, isOwner, validateListing, wrapAsync(listingController.updateListing))
+    .put(isloggedin, isOwner, upload.single('listing[image]'),validateListing, wrapAsync(listingController.updateListing))
     .delete(isloggedin, isOwner, upload.single('listing[image]'), wrapAsync(listingController.destroyListing));
 
 

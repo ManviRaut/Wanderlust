@@ -85,7 +85,7 @@ app.use((req, res, next) => {
 });
 
 app.get("/", (req, res) => {
-    res.redirect("/listing");
+    res.redirect("/listings");
 });
 app.use("/listings", listings);
 app.use("/listings/:id/reviews", reviews);

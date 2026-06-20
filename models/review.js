@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const { schema } = require("./listing");
+const { string, number } = require("joi");
 const Schema = mongoose.Schema;
 
 const reviewSchema = new Schema({

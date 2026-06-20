@@ -15,7 +15,7 @@ module.exports.showListing = async (req, res) => {
     const listing = await Listing.findById(id).populate({ path: "reviews", populate: { path: "author" }, }).populate({ path: "owner" });
     if (!listing) {
         req.flash("error", "Listing you requested for does not exist");
-        return res.redirect("/listing");
+        return res.redirect("/listings");
     }
     console.log(listing);
     res.render("show", { listing });
@@ -30,7 +30,7 @@ module.exports.createListing = async (req, res) => {
     newlisting.image = { url, filename };
     await newlisting.save();
     req.flash("success", " listing Created!");
-    res.redirect("/listing");
+    res.redirect("/listings");
 };
 
 module.exports.editListing = async (req, res) => {
@@ -38,7 +38,7 @@ module.exports.editListing = async (req, res) => {
     const listing = await Listing.findById(id)
      if(!listing){
         req.flash("error", "Listing you requested for does not exist!");  
-        return res.redirect("/listings");
+        return res.redirect("/listing");
     }
     let originalimageUrl = listing.image.url;
     originalimageUrl = originalimageUrl.replace("/upload", "/upload/h_300,w_250");

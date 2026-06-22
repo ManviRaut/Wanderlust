@@ -49,7 +49,7 @@ router.get("/search", async (req, res) => {
         ],
     });
 
-    res.render("listings/index.ejs", { allListings: listings });
+    res.render("index.ejs", { allListing: listings });
 });
 
 

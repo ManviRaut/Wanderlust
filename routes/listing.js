@@ -22,7 +22,35 @@ router.route("/:id")
     .put(isloggedin, isOwner, upload.single('listing[image]'),validateListing, wrapAsync(listingController.updateListing))
     .delete(isloggedin, isOwner, upload.single('listing[image]'), wrapAsync(listingController.destroyListing));
 
+//search route
+router.get("/search", async (req, res) => {
+    const query = req.query.q;
 
+    const listings = await Listing.find({
+        $or: [
+            {
+                title: {
+                    $regex: query,
+                    $options: "i",
+                },
+            },
+            {
+                location: {
+                    $regex: query,
+                    $options: "i",
+                },
+            },
+            {
+                country: {
+                    $regex: query,
+                    $options: "i",
+                },
+            },
+        ],
+    });
+
+    res.render("listings/index.ejs", { allListings: listings });
+});
 
 
 module.exports = router;

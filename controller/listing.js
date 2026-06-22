@@ -1,6 +1,34 @@
 const Listing = require("../models/listing");
 
 module.exports.index = async (req, res) => {
+     let filter = {};
+
+    
+    // If user searched something
+    if (req.query.q && req.query.q.trim() !== "") {
+        filter = {
+            $or: [
+                {
+                    title: {
+                        $regex: req.query.q,
+                        $options: "i",
+                    },
+                },
+                {
+                    location: {
+                        $regex: req.query.q,
+                        $options: "i",
+                    },
+                },
+                {
+                    country: {
+                        $regex: req.query.q,
+                        $options: "i",
+                    },
+                },
+            ],
+        };
+    }
     const allListing = await Listing.find({});
     res.render("index", { allListing });
 
@@ -68,31 +96,5 @@ module.exports.destroyListing = async (req, res) => {
     res.redirect("/listings");
 };
 
-module.exports.searchlistings = async (req, res) => {
-    const query = req.query.q;
-
-    const listings = await Listing.find({
-        $or: [
-            {
-                title: {
-                    $regex: query,
-                    $options: "i"
-                }
-            },
-            {
-                location: {
-                    $regex: query,
-                    $options: "i"
-                }
-            }
-        ]
-    });
-if(!query) {
-    const listings = await Listing.find({});
-      res.render("listings/index.ejs", {
-        allListings: listings
-    });
-}
-  
-};
+;
 

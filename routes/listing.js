@@ -15,8 +15,7 @@ router.route("/")
 
 //New Route
 router.get("/newForm", isloggedin, listingController.RenderNewForm);
-//search route
-router.get("/search",wrapAsync(listingController.searchlistings) );
+
            
 //Edit route
 router.get("/:id/edit", isloggedin, isOwner, wrapAsync(listingController.editListing));

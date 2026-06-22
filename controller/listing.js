@@ -68,7 +68,7 @@ module.exports.destroyListing = async (req, res) => {
     res.redirect("/listings");
 };
 
-module.exports.searchListing = async (req, res) => {
+module.exports.searchlistings = async (req, res) => {
     const query = req.query.q;
 
     const listings = await Listing.find({

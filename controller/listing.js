@@ -10,14 +10,18 @@ module.exports.index = async (req, res) => {
             $or: [
                 { title: { $regex: query, $options: "i" } },
                 { location: { $regex: query, $options: "i" } },
-                { country: { $regex: query, $options: "i" } },
-            ],
+                { country: { $regex: query, $options: "i" } }
+            ]
         });
     } else {
+        // ALWAYS default when page loads
         allListings = await Listing.find({});
     }
 
-    res.render("index", { allListings });
+    res.render("index", {
+        allListings,
+        search: ""   // always reset search input
+    });
 };
 
 module.exports.RenderNewForm = (req, res) => {

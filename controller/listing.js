@@ -87,9 +87,12 @@ module.exports.searchListing = async (req, res) => {
             }
         ]
     });
-
-    res.render("listings/index.ejs", {
+if(!query) {
+    const listings = await Listing.find({});
+      res.render("listings/index.ejs", {
         allListings: listings
     });
+}
+  
 };
 

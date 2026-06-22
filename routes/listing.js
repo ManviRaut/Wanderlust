@@ -13,15 +13,6 @@ router.route("/")
     .get(wrapAsync(listingController.index))
     .post(isloggedin, upload.single('listing[image]'), validateListing, wrapAsync(listingController.createListing));
 
-//New Route
-router.get("/newForm", isloggedin, listingController.RenderNewForm);
-//Edit route
-router.get("/:id/edit", isloggedin, isOwner, wrapAsync(listingController.editListing));
-router.route("/:id")
-    .get(wrapAsync(listingController.showListing))
-    .put(isloggedin, isOwner, upload.single('listing[image]'),validateListing, wrapAsync(listingController.updateListing))
-    .delete(isloggedin, isOwner, upload.single('listing[image]'), wrapAsync(listingController.destroyListing));
-
 //search route
 router.get("/search", async (req, res) => {
     const query = req.query.q;
@@ -51,6 +42,18 @@ router.get("/search", async (req, res) => {
 
     res.render("index.ejs", { allListing: listings });
 });
+
+
+
+
+//New Route
+router.get("/newForm", isloggedin, listingController.RenderNewForm);
+//Edit route
+router.get("/:id/edit", isloggedin, isOwner, wrapAsync(listingController.editListing));
+router.route("/:id")
+    .get(wrapAsync(listingController.showListing))
+    .put(isloggedin, isOwner, upload.single('listing[image]'),validateListing, wrapAsync(listingController.updateListing))
+    .delete(isloggedin, isOwner, upload.single('listing[image]'), wrapAsync(listingController.destroyListing));
 
 
 module.exports = router;

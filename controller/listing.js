@@ -1,28 +1,9 @@
 const Listing = require("../models/listing");
 
 module.exports.index = async (req, res) => {
-    let allListings;
-
-    const query = req.query.q;
-
-    if (query && query.trim() !== "") {
-        allListings = await Listing.find({
-            $or: [
-                { title: { $regex: query, $options: "i" } },
-                { location: { $regex: query, $options: "i" } },
-                { country: { $regex: query, $options: "i" } }
-            ]
-        });
-    } else {
-        // ALWAYS default when page loads
-        allListings = await Listing.find({});
-    }
-
-    res.render("index", {
-        allListings,
-        search: ""   // always reset search input
-    });
-};
+    const allListings = await Listing.find({});
+  res.render("index", { allListings });
+}; 
 
 module.exports.RenderNewForm = (req, res) => {
     res.render("new");

@@ -30,7 +30,7 @@ module.exports.index = async (req, res) => {
         };
     }
     const allListing = await Listing.find({});
-    res.render("index", { allListing });
+    res.render("index", { allListing, searchQuery: req.query.q || "", });
 
 };
 

@@ -9,6 +9,26 @@ module.exports.RenderNewForm = (req, res) => {
     res.render("new");
 };
 
+ module.exports.searchListing=async(req,res)=>{
+    let {q}=req.query;
+    let allListings=await Listing.find({
+        $or:[
+            {
+                title:{
+                    $regex:q,
+                    $options:"i"
+                }
+            },
+            {
+                location:{
+                    $regex:q,
+                    $options:"i"
+                }
+            }
+        ]
+    });
+    res.render("listings/index.ejs",{allListings});
+ }
 module.exports.showListing = async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id).populate({ path: "reviews", populate: { path: "author" }, }).populate({ path: "owner" });

@@ -11,7 +11,7 @@ module.exports.RenderNewForm = (req, res) => {
 
  module.exports.searchListing=async(req,res)=>{
     let {q}=req.query;
-    let allListings=await Listing.find({
+    let allListing=await Listing.find({
         $or:[
             {
                 title:{
@@ -27,7 +27,7 @@ module.exports.RenderNewForm = (req, res) => {
             }
         ]
     });
-    res.render("listings/index.ejs",{allListings});
+    res.render("index",{allListing});
  }
 module.exports.showListing = async (req, res) => {
     let { id } = req.params;
